@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sistema demostrativo de reserva de horas médicas">
+  <title>SaludConecta | Reserva de horas médicas</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="encabezado">
+    <div class="contenedor encabezado-contenido">
+      <div class="marca">
+        <div class="logo">+</div>
+        <div>
+          <h1>SaludConecta</h1>
+          <p>Centro de Atención Médica</p>
+        </div>
+      </div>
+      <span class="etiqueta">Proyecto DevOps</span>
+    </div>
+  </header>
+
+  <main class="contenedor">
+
+    <section class="bienvenida">
+      <span class="subtitulo">PLATAFORMA DE ATENCIÓN</span>
+      <h2>Reserva de horas médicas</h2>
+      <p>
+        Selecciona una especialidad, fecha y horario para
+        simular una solicitud de atención médica.
+      </p>
+
+      <div class="estado-servicio">
+        <span class="punto-estado"></span>
+        Servicio web disponible
+      </div>
+    </section>
+
+    <div class="columnas">
+
+      <section class="tarjeta">
+        <div class="tarjeta-encabezado">
+          <h3>Solicitud de atención</h3>
+          <p>Completa los siguientes campos.</p>
+        </div>
+
+        <form id="formulario-reserva">
+
+          <div class="campo">
+            <label for="nombre">Nombre de referencia</label>
+            <input
+              type="text"
+              id="nombre"
+              placeholder="Ejemplo: Paciente de prueba"
+              maxlength="60"
+              required
+            >
+          </div>
+
+          <div class="campo">
+            <label for="especialidad">Especialidad médica</label>
+            <select id="especialidad" required>
+              <option value="">Selecciona una especialidad</option>
+              <option value="medicina-general">Medicina general</option>
+              <option value="pediatria">Pediatría</option>
+              <option value="traumatologia">Traumatología</option>
+              <option value="cardiologia">Cardiología</option>
+              <option value="dermatologia">Dermatología</option>
+            </select>
+          </div>
+
+          <div class="fila-campos">
+            <div class="campo">
+              <label for="fecha">Fecha de atención</label>
+              <input type="date" id="fecha" required>
+            </div>
+
+            <div class="campo">
+              <label for="horario">Horario</label>
+              <select id="horario" required>
+                <option value="">Selecciona un horario</option>
+                <option>09:00</option>
+                <option>10:00</option>
+                <option>11:00</option>
+                <option>12:00</option>
+                <option>15:00</option>
+                <option>16:00</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="aviso">
+            Esta aplicación es una simulación académica.
+            No registra reservas reales ni almacena
+            información personal.
+          </div>
+
+          <button type="submit" class="boton-reserva">
+            Simular reserva
+          </button>
+
+        </form>
+
+        <div id="resultado" class="resultado" role="status" aria-live="polite" hidden></div>
+
+      </section>
+
+      <aside class="informacion">
+
+        <section class="tarjeta">
+          <h3>Información de atención</h3>
+
+          <div class="dato">
+            <span class="dato-titulo">Horario de atención</span>
+            <strong>Lunes a viernes</strong>
+            <p>08:00 a 18:00 horas</p>
+          </div>
+
+          <div class="dato">
+            <span class="dato-titulo">Modalidad</span>
+            <strong>Atención ambulatoria</strong>
+            <p>Consultas médicas programadas</p>
+          </div>
+
+          <div class="dato">
+            <span class="dato-titulo">Especialidades</span>
+            <strong>5 especialidades</strong>
+            <p>Disponibles para simulación</p>
+          </div>
+        </section>
+
+        <section class="tarjeta tarjeta-estado">
+          <h3>Estado de la plataforma</h3>
+          <div class="indicador">
+            <span class="punto-estado"></span>
+            <strong>Interfaz disponible</strong>
+          </div>
+          <p>
+            Aplicación web estática servida mediante
+            Nginx en un contenedor Docker.
+          </p>
+          <small>Entorno local de pruebas DevOps</small>
+        </section>
+
+      </aside>
+    </div>
+
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor">
+      <p>SaludConecta © 2026 | Proyecto académico DevOps</p>
+      <p>IACC - Contenedores y simulación de entornos</p>
+    </div>
+  </footer>
+
+  <script>
+    const formulario = document.getElementById("formulario-reserva");
+    const resultado = document.getElementById("resultado");
+    const fecha = document.getElementById("fecha");
+
+    const hoy = new Date();
+    const anio = hoy.getFullYear();
+    const mes = String(hoy.getMonth() + 1).padStart(2, "0");
+    const dia = String(hoy.getDate()).padStart(2, "0");
+    fecha.min = `${anio}-${mes}-${dia}`;
+
+    formulario.addEventListener("submit", function(evento) {
+      evento.preventDefault();
+
+      if (!formulario.reportValidity()) return;
+
+      const especialidad = document.getElementById("especialidad");
+      const horario = document.getElementById("horario");
+
+      const especialidadTexto =
+        especialidad.options[especialidad.selectedIndex].text;
+
+      const horarioTexto = horario.value;
+
+      resultado.textContent =
+        "Simulación realizada correctamente. " +
+        "Especialidad: " + especialidadTexto +
+        " | Fecha: " + fecha.value +
+        " | Horario: " + horarioTexto +
+        ". No se ha generado una reserva real.";
+
+      resultado.hidden = false;
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+
+services:
+  web:
+    build: .
+    image: reservas-medicas:1.0
+    container_name: reservas-medicas-web
+    ports:
+      - "127.0.0.1:8080:80"
