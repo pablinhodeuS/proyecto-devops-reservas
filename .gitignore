@@ -1,0 +1,18 @@
+# Variables de entorno locales
+.env
+.env.*
+!.env.example
+
+# Registros
+*.log
+
+# Archivos temporales
+*.tmp
+*.bak
+
+# Archivos del sistema
+Thumbs.db
+.DS_Store
+
+# Configuración local de VS Code
+.vscode/
